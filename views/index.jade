@@ -1,0 +1,13 @@
+html
+  head
+    title Subscribe to #{plan.name}
+  body
+    h1 Subscribe to #{plan.name}
+    form(action="" method="POST")
+      script(
+        src="https://checkout.stripe.com/checkout.js"
+        class="stripe-button"
+        data-key=stripe.pub
+        data-amount=plan.amount
+        data-name=plan.name
+      )
