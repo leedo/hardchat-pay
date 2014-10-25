@@ -23,7 +23,7 @@ block content
 
     each sub in customer.subscriptions.data
       h3 #{sub.plan.name}
-        span(class="sub-price") (#{sub.plan.amount / 100} #{sub.plan.currency.toUpperCase()} / #{sub.plan.interval})
+        span(class="sub-price") #{sub.plan.amount / 100} #{sub.plan.currency.toUpperCase()} / #{sub.plan.interval_count} #{sub.plan.interval}s
       dl
         dt Sub status
         dd(class=sub.status) #{sub.status}
@@ -38,13 +38,14 @@ block content
         input(type="submit", value="Unsubscribe")
 
     if !customer.subscriptions.data.length
-      h3 #{plan.name} (#{plan.amount / 100} #{plan.currency.toUpperCase()} / #{plan.interval})
+      h3 #{plan.name}
+        span(class="sub-price") #{plan.amount / 100} #{plan.currency.toUpperCase()} / #{plan.interval_count} #{plan.interval}s
       form(action="#{root}subscribe/#{plan.id}", method="POST")
         input(type="submit", value="Subscribe")
 
   else
     h3 #{plan.name}
-      span(class="sub-price") (#{plan.amount / 100} #{plan.currency.toUpperCase()} / #{plan.interval})
+      span(class="sub-price") #{plan.amount / 100} #{plan.currency.toUpperCase()} / #{plan.interval_count} #{plan.interval}s
     form(action="#{root}customer", method="POST")
       script(
         src="https://checkout.stripe.com/checkout.js"
