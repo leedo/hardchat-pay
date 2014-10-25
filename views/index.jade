@@ -1,9 +1,51 @@
-html
-  head
-    title Subscribe to #{plan.name}
-  body
-    h1 Subscribe to #{plan.name}
-    form(action="" method="POST")
+extends layout
+
+block content
+  h2 Hardch.at
+
+  p You are logged in as 
+    strong=alice.username
+    .
+
+  if customer
+    h3 Billing info
+
+    dl
+      dt E-mail
+      dd #{customer.email}
+      dt Balance
+      dd #{customer.account_balance} #{customer.currency.toUpperCase()}
+      dt Credit cards
+      dd
+        ul(class="cards")
+          each card in customer.cards.data
+            li #{card.brand} ending in #{card.last4} (exp #{card.exp_month}/#{card.exp_year})
+
+    each sub in customer.subscriptions.data
+      h3 #{sub.plan.name}
+        span(class="sub-price") (#{sub.plan.amount / 100} #{sub.plan.currency.toUpperCase()} / #{sub.plan.interval})
+      dl
+        dt Sub status
+        dd(class=sub.status) #{sub.status}
+        dt Current period started
+        dd
+          time(data-epoch=sub.current_period_start) #{new Date(sub.current_period_start)}
+        dt Current period ends
+        dd
+          time(data-epoch=sub.current_period_end) #{new Date(sub.current_period_end)}
+
+      form(action="#{root}unsubscribe/#{sub.id}", method="POST")
+        input(type="submit", value="Unsubscribe")
+
+    if !customer.subscriptions.data.length
+      h3 #{plan.name} (#{plan.amount / 100} #{plan.currency.toUpperCase()} / #{plan.interval})
+      form(action="#{root}subscribe/#{plan.id}", method="POST")
+        input(type="submit", value="Subscribe")
+
+  else
+    h3 #{plan.name}
+      span(class="sub-price") (#{plan.amount / 100} #{plan.currency.toUpperCase()} / #{plan.interval})
+    form(action="#{root}customer", method="POST")
       script(
         src="https://checkout.stripe.com/checkout.js"
         class="stripe-button"

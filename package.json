@@ -1,0 +1,28 @@
+{
+    "name": "hardchat-pay",
+    "description": "payments for hardchat",
+    "version": "0.0.1",
+    "homepage": "http://github.com/leedo/hardchat-pay",
+    "author": {
+        "name": "lee"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/leedo/hardchat-pay.git"
+    },
+    "dependencies": {
+        "express": "4.10.0",
+        "cookie-parser": "1.3.3",
+        "body-parser": "",
+        "jade": "0.26.3",
+        "mysql": "2.5.2",
+        "cli": "0.6.5",
+        "stripe": "2.8.0",
+        "coffee-script": ""
+    },
+    "licenses": [
+        {
+            "type": "BSD"
+        }
+    ]
+}
